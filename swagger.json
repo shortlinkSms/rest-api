@@ -30,6 +30,7 @@
         "summary" : "get account balance",
         "operationId" : "getBalance",
         "description" : "Get the account balance\n",
+        "tags" : [ "Balances" ],
         "responses" : {
           "200" : {
             "description" : "Get the account balance",
