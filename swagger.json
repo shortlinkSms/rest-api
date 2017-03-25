@@ -49,6 +49,18 @@
           }
         }
       }
+    },
+    "/campaign" : {
+      "post" : {
+        "summary" : "create a campaign",
+        "operationId" : "createCampaign",
+        "description" : "create a campaign",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
     }
   },
   "definitions" : {
