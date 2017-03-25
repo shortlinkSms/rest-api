@@ -59,6 +59,27 @@
           "example" : 20.5
         }
       }
+    },
+    "Contact" : {
+      "type" : "object",
+      "properties" : {
+        "firstName" : {
+          "type" : "string",
+          "example" : "François"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Mitterrand"
+        },
+        "phone" : {
+          "type" : "string",
+          "example" : "+33601020304",
+          "required" : true
+        },
+        "field1" : {
+          "type" : "string"
+        }
+      }
     }
   },
   "host" : "virtserver.swaggerhub.com",
