@@ -1,0 +1,65 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "Shortlink REST Api",
+    "description" : "contact shortlink simply",
+    "version" : "1.0.0",
+    "contact" : {
+      "email" : "support@shortlink.ma"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "developers",
+    "description" : "Operations available to regular developers"
+  } ],
+  "schemes" : [ "https" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/balance" : {
+      "get" : {
+        "summary" : "get account balance",
+        "operationId" : "getBalance",
+        "description" : "Get the account balance\n",
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "object",
+              "items" : {
+                "$ref" : "#/definitions/BalanceItem"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "404" : {
+            "description" : "Not Authorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "BalanceItem" : {
+      "type" : "object",
+      "required" : [ "remaining" ],
+      "properties" : {
+        "remaining" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 20.5
+        }
+      }
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/SHORTLINKSMS/rest-api/1.0.0"
+}
