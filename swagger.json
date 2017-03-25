@@ -91,6 +91,32 @@
           "format" : "date-time"
         }
       }
+    },
+    "SendSmsCampaignRequest" : {
+      "type" : "object",
+      "required" : [ "campaignName", "smsTemplate", "contacts" ],
+      "properties" : {
+        "campaignName" : {
+          "type" : "string",
+          "example" : "Campaign1"
+        },
+        "smsTemplate" : {
+          "type" : "string",
+          "example" : "hi Mr {firstName}, welcome to shortlink universe"
+        },
+        "contacts" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Contact"
+          }
+        },
+        "executionPolicy" : {
+          "type" : "object",
+          "items" : {
+            "$ref" : "#/definitions/ExecutionPolicy"
+          }
+        }
+      }
     }
   }
 }
