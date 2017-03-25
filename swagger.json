@@ -52,9 +52,17 @@
     },
     "/campaign" : {
       "post" : {
-        "summary" : "create a campaign",
+        "summary" : "create an sms campaign",
         "operationId" : "createCampaign",
         "description" : "create a campaign",
+        "parameters" : [ {
+          "name" : "campaignName",
+          "in" : "body",
+          "schema" : {
+            "type" : "string",
+            "example" : "test"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -119,6 +127,8 @@
         },
         "contacts" : {
           "type" : "array",
+          "description" : "The contact list should contains at least one element.\n",
+          "minItems" : 1,
           "items" : {
             "$ref" : "#/definitions/Contact"
           }
