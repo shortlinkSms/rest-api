@@ -12,6 +12,8 @@
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
+  "host" : "app.shortlink.ma",
+  "basePath" : "/api/v1",
   "tags" : [ {
     "name" : "admins",
     "description" : "Secured Admin-only calls"
@@ -80,8 +82,15 @@
           "type" : "string"
         }
       }
+    },
+    "ExecutionPolicy" : {
+      "type" : "object",
+      "properties" : {
+        "startAt" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
     }
-  },
-  "host" : "virtserver.swaggerhub.com",
-  "basePath" : "/SHORTLINKSMS/rest-api/1.0.0"
+  }
 }
