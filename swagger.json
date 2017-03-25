@@ -56,11 +56,14 @@
         "operationId" : "createCampaign",
         "description" : "create a campaign",
         "parameters" : [ {
-          "name" : "campaignName",
+          "name" : "request",
           "in" : "body",
+          "required" : true,
           "schema" : {
-            "type" : "string",
-            "example" : "test"
+            "type" : "object",
+            "items" : {
+              "$ref" : "#/definitions/SendSmsCampaignRequest"
+            }
           }
         } ],
         "responses" : {
