@@ -21,6 +21,7 @@
   } ],
   "schemes" : [ "https" ],
   "produces" : [ "application/json" ],
+  "consumes" : [ "application/json" ],
   "paths" : {
     "/balance" : {
       "get" : {
