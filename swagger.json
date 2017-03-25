@@ -30,7 +30,7 @@
         "description" : "Get the account balance\n",
         "responses" : {
           "200" : {
-            "description" : "search results matching criteria",
+            "description" : "Get the account balance",
             "schema" : {
               "type" : "object",
               "items" : {
