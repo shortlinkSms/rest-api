@@ -25,13 +25,13 @@
   "produces" : [ "application/json" ],
   "consumes" : [ "application/json" ],
   "securityDefinitions" : {
-    "shortlink-api-key" : {
+    "shortlinkApiKey" : {
       "type" : "apiKey",
       "description" : "the api key, generated from the shortlink plateforme",
       "name" : "x-shortlink-apikey",
       "in" : "header"
     },
-    "shortlink-api-secret" : {
+    "shortlinkApiSecret" : {
       "type" : "apiKey",
       "description" : "The secret key, generated from the shortlink plateforme",
       "name" : "x-shortlink-apisecret",
@@ -39,8 +39,8 @@
     }
   },
   "security" : [ {
-    "shortlink-api-key" : [ ],
-    "shortlink-api-secret" : [ ]
+    "shortlinkApiKey" : [ ],
+    "shortlinkApiSecret" : [ ]
   } ],
   "paths" : {
     "/balance" : {
