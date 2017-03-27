@@ -171,19 +171,19 @@
     },
     "SendSmsCampaignRequest" : {
       "type" : "object",
-      "required" : [ "campaignName", "smsTemplate", "contacts" ],
+      "required" : [ "name", "message", "sendList" ],
       "properties" : {
-        "campaignName" : {
+        "name" : {
           "type" : "string",
-          "example" : "Campaign1"
+          "example" : "Campaign1",
+          "description" : "Welcome Campaign"
         },
-        "smsTemplate" : {
+        "message" : {
           "type" : "string",
           "example" : "hi Mr {firstName}, welcome to shortlink universe"
         },
-        "contacts" : {
+        "sendList" : {
           "type" : "array",
-          "description" : "The contact list should contains at least one element.\n",
           "minItems" : 1,
           "items" : {
             "$ref" : "#/definitions/Contact"
