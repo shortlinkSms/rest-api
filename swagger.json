@@ -75,6 +75,16 @@
     }
   },
   "definitions" : {
+    "Response" : {
+      "type" : "object",
+      "required" : [ "status" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "enum" : [ "success", "fail", "error" ]
+        }
+      }
+    },
     "BalanceItem" : {
       "type" : "object",
       "required" : [ "remaining" ],
