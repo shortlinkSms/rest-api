@@ -51,13 +51,7 @@
         "tags" : [ "Balances" ],
         "responses" : {
           "200" : {
-            "description" : "Get the account balance",
-            "schema" : {
-              "$ref" : "#/definitions/GetBalanceResponse"
-            }
-          },
-          "400" : {
-            "description" : "bad input parameter"
+            "$ref" : "#/responses/GetBalanceSuccessResponses"
           }
         }
       }
@@ -67,6 +61,7 @@
         "summary" : "create an sms campaign",
         "operationId" : "createCampaign",
         "description" : "Create an sms campaign",
+        "tags" : [ "Campaigns" ],
         "parameters" : [ {
           "name" : "campaign",
           "in" : "body",
@@ -90,58 +85,20 @@
     }
   },
   "definitions" : {
-    "SuccessResponse" : {
+    "BalanceItem" : {
       "type" : "object",
-      "required" : [ "status", "data" ],
+      "description" : "The entity that represent the account balance",
+      "required" : [ "remaining" ],
       "properties" : {
-        "status" : {
-          "type" : "string",
-          "default" : "success",
-          "example" : "success"
-        },
-        "data" : {
-          "type" : "object"
+        "remaining" : {
+          "type" : "number",
+          "description" : "Account remaining units",
+          "format" : "double",
+          "example" : 20.5
         }
       }
     },
-    "ValidationError" : {
-      "type" : "object",
-      "required" : [ "status", "code", "data" ],
-      "properties" : {
-        "status" : {
-          "type" : "string",
-          "default" : "fail",
-          "example" : "fail"
-        },
-        "code" : {
-          "type" : "string"
-        },
-        "data" : {
-          "type" : "object"
-        }
-      }
-    },
-    "Error" : {
-      "type" : "object",
-      "required" : [ "status", "message" ],
-      "properties" : {
-        "status" : {
-          "type" : "string",
-          "default" : "error",
-          "example" : "error"
-        },
-        "message" : {
-          "type" : "string"
-        },
-        "code" : {
-          "type" : "string"
-        },
-        "data" : {
-          "type" : "object"
-        }
-      }
-    },
-    "GetBalanceResponse" : {
+    "GetBalanceSuccess" : {
       "allOf" : [ {
         "$ref" : "#/definitions/SuccessResponse"
       }, {
@@ -152,17 +109,6 @@
           }
         }
       } ]
-    },
-    "BalanceItem" : {
-      "type" : "object",
-      "required" : [ "remaining" ],
-      "properties" : {
-        "remaining" : {
-          "type" : "number",
-          "format" : "double",
-          "example" : 20.5
-        }
-      }
     },
     "Contact" : {
       "type" : "object",
@@ -291,6 +237,57 @@
           }
         }
       } ]
+    },
+    "SuccessResponse" : {
+      "type" : "object",
+      "required" : [ "status", "data" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "default" : "success",
+          "example" : "success"
+        },
+        "data" : {
+          "type" : "object"
+        }
+      }
+    },
+    "Error" : {
+      "type" : "object",
+      "required" : [ "status", "message" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "default" : "error",
+          "example" : "error"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "object"
+        }
+      }
+    },
+    "ValidationError" : {
+      "type" : "object",
+      "required" : [ "status", "code", "data" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "default" : "fail",
+          "example" : "fail"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "object"
+        }
+      }
     }
   },
   "responses" : {
@@ -310,6 +307,12 @@
       "description" : "Campaign created successfully",
       "schema" : {
         "$ref" : "#/definitions/SendSmsCampaignSuccess"
+      }
+    },
+    "GetBalanceSuccessResponses" : {
+      "description" : "Balance retrieved successfully",
+      "schema" : {
+        "$ref" : "#/definitions/GetBalanceSuccess"
       }
     }
   }
