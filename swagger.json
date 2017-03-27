@@ -64,9 +64,9 @@
       "post" : {
         "summary" : "create an sms campaign",
         "operationId" : "createCampaign",
-        "description" : "create a campaign",
+        "description" : "Create an sms campaign",
         "parameters" : [ {
-          "name" : "request",
+          "name" : "campaign",
           "in" : "body",
           "required" : true,
           "schema" : {
@@ -75,41 +75,68 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "Get the id of the created campaign",
-            "schema" : {
-              "$ref" : "#/definitions/SendSmsCampaignResponse"
-            }
+            "$ref" : "#/responses/SendSmsCampaignSuccessResponse"
           },
           "400" : {
-            "description" : "bad input parameter"
+            "$ref" : "#/responses/Standard400ValidationErrorResponse"
           }
         }
       }
     }
   },
   "definitions" : {
-    "Response" : {
+    "SuccessResponse" : {
       "type" : "object",
-      "required" : [ "status" ],
+      "required" : [ "status", "data" ],
       "properties" : {
         "status" : {
           "type" : "string",
-          "enum" : [ "success", "fail", "error" ]
+          "default" : "success",
+          "example" : "success"
+        },
+        "data" : {
+          "type" : "object"
+        }
+      }
+    },
+    "ValidationError" : {
+      "type" : "object",
+      "required" : [ "status", "code", "data" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "default" : "fail"
+        },
+        "code" : {
+          "type" : "number"
+        },
+        "data" : {
+          "type" : "object"
+        }
+      }
+    },
+    "Error" : {
+      "type" : "object",
+      "required" : [ "status", "message" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "default" : "error"
         },
         "message" : {
           "type" : "string"
         },
-        "data" : {
-          "type" : "object"
-        },
         "code" : {
           "type" : "number"
+        },
+        "data" : {
+          "type" : "object"
         }
       }
     },
     "GetBalanceResponse" : {
       "allOf" : [ {
-        "$ref" : "#/definitions/Response"
+        "$ref" : "#/definitions/SuccessResponse"
       }, {
         "type" : "object",
         "properties" : {
@@ -169,6 +196,24 @@
         }
       }
     },
+    "SendListItem" : {
+      "type" : "object",
+      "properties" : {
+        "listIds" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "contacts" : {
+          "type" : "array",
+          "minItems" : 1,
+          "items" : {
+            "$ref" : "#/definitions/Contact"
+          }
+        }
+      }
+    },
     "SendSmsCampaignRequest" : {
       "type" : "object",
       "required" : [ "name", "message", "sendList" ],
@@ -183,20 +228,16 @@
           "example" : "hi Mr {firstName}, welcome to shortlink universe"
         },
         "sendList" : {
-          "type" : "array",
-          "minItems" : 1,
-          "items" : {
-            "$ref" : "#/definitions/Contact"
-          }
+          "$ref" : "#/definitions/SendListItem"
         },
         "executionPolicy" : {
           "$ref" : "#/definitions/ExecutionPolicy"
         }
       }
     },
-    "SendSmsCampaignResponse" : {
+    "SendSmsCampaignSuccess" : {
       "allOf" : [ {
-        "$ref" : "#/definitions/Response"
+        "$ref" : "#/definitions/SuccessResponse"
       }, {
         "type" : "object",
         "properties" : {
@@ -212,6 +253,26 @@
           }
         }
       } ]
+    }
+  },
+  "responses" : {
+    "Standard500ErrorResponse" : {
+      "description" : "Unable to process request due to an error",
+      "schema" : {
+        "$ref" : "#/definitions/Error"
+      }
+    },
+    "Standard400ValidationErrorResponse" : {
+      "description" : "One or more of the query parameters failed validation or was not provided. The request should not be attempted until the parameters are changed. The fields that failed validation will be detailed where possible.",
+      "schema" : {
+        "$ref" : "#/definitions/ValidationError"
+      }
+    },
+    "SendSmsCampaignSuccessResponse" : {
+      "description" : "Unable to process request due to an error",
+      "schema" : {
+        "$ref" : "#/definitions/SendSmsCampaignSuccess"
+      }
     }
   }
 }
