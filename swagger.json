@@ -41,7 +41,7 @@
           "400" : {
             "description" : "bad input parameter"
           },
-          "404" : {
+          "401" : {
             "description" : "Not Authorized"
           }
         }
@@ -62,7 +62,16 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "Get the id of the created campaign",
+            "schema" : {
+              "$ref" : "#/definitions/SendSmsCampaignResponse"
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Not Authorized"
           }
         }
       }
@@ -174,6 +183,24 @@
           "$ref" : "#/definitions/ExecutionPolicy"
         }
       }
+    },
+    "SendSmsCampaignResponse" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/Response"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "the id of the generated campaign"
+              }
+            }
+          }
+        }
+      } ]
     }
   }
 }
