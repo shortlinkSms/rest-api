@@ -27,11 +27,13 @@
   "securityDefinitions" : {
     "shortlink-api-key" : {
       "type" : "apiKey",
+      "description" : "the api key, generated from the shortlink plateforme",
       "name" : "x-shortlink-apikey",
       "in" : "header"
     },
     "shortlink-api-secret" : {
       "type" : "apiKey",
+      "description" : "The secret key, generated from the shortlink plateforme",
       "name" : "x-shortlink-apisecret",
       "in" : "header"
     }
@@ -45,7 +47,7 @@
       "get" : {
         "summary" : "get account balance",
         "operationId" : "getBalance",
-        "description" : "Get the account balance\n",
+        "description" : "Retrieve the account balance of the current user\n",
         "tags" : [ "Balances" ],
         "responses" : {
           "200" : {
@@ -79,6 +81,9 @@
           },
           "400" : {
             "$ref" : "#/responses/Standard400ValidationErrorResponse"
+          },
+          "500" : {
+            "$ref" : "#/responses/Standard500ErrorResponse"
           }
         }
       }
@@ -105,10 +110,11 @@
       "properties" : {
         "status" : {
           "type" : "string",
-          "default" : "fail"
+          "default" : "fail",
+          "example" : "fail"
         },
         "code" : {
-          "type" : "number"
+          "type" : "string"
         },
         "data" : {
           "type" : "object"
@@ -121,13 +127,14 @@
       "properties" : {
         "status" : {
           "type" : "string",
-          "default" : "error"
+          "default" : "error",
+          "example" : "error"
         },
         "message" : {
           "type" : "string"
         },
         "code" : {
-          "type" : "number"
+          "type" : "string"
         },
         "data" : {
           "type" : "object"
@@ -193,7 +200,8 @@
         "validityPeriod" : {
           "type" : "number",
           "description" : "The message validity period in minutes. When the period expires, it will not be allowed for the message to be sent\nValidity period longer than 48h is not supported (in this case, it will be automatically set to 48h).\n",
-          "default" : 2880
+          "default" : 2880,
+          "example" : 120
         },
         "sendAt" : {
           "type" : "string",
@@ -205,15 +213,19 @@
     },
     "SendListItem" : {
       "type" : "object",
+      "description" : "specify the list of new contacts or add exiting ones from your shortlink lists",
       "properties" : {
         "listIds" : {
           "type" : "array",
+          "description" : "import contacts from the specified list identifiers",
           "items" : {
-            "type" : "string"
+            "type" : "string",
+            "example" : "K7ffn4g3tPX9pSTjK"
           }
         },
         "contacts" : {
           "type" : "array",
+          "description" : "add new contacts to the campaign",
           "minItems" : 1,
           "items" : {
             "$ref" : "#/definitions/Contact"
@@ -260,6 +272,25 @@
           }
         }
       } ]
+    },
+    "SendSmsCampaignValidationError" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/SuccessResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "the id of the generated campaign",
+                "example" : "MzFtJWDGn8vb9Wmtc"
+              }
+            }
+          }
+        }
+      } ]
     }
   },
   "responses" : {
@@ -276,7 +307,7 @@
       }
     },
     "SendSmsCampaignSuccessResponse" : {
-      "description" : "Unable to process request due to an error",
+      "description" : "Campaign created successfully",
       "schema" : {
         "$ref" : "#/definitions/SendSmsCampaignSuccess"
       }
