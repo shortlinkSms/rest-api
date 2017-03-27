@@ -1,3 +1,284 @@
 {
-  "swagger" : "2.0"
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "Shortlink REST Api",
+    "description" : "contact shortlink simply",
+    "version" : "1.0.0",
+    "contact" : {
+      "email" : "support@shortlink.ma"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "app.shortlink.ma",
+  "basePath" : "/api/v1",
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "developers",
+    "description" : "Operations available to regular developers"
+  } ],
+  "schemes" : [ "https" ],
+  "produces" : [ "application/json" ],
+  "consumes" : [ "application/json" ],
+  "securityDefinitions" : {
+    "shortlink-api-key" : {
+      "type" : "apiKey",
+      "name" : "x-shortlink-apikey",
+      "in" : "header"
+    },
+    "shortlink-api-secret" : {
+      "type" : "apiKey",
+      "name" : "x-shortlink-apisecret",
+      "in" : "header"
+    }
+  },
+  "security" : [ {
+    "shortlink-api-key" : [ ],
+    "shortlink-api-secret" : [ ]
+  } ],
+  "paths" : {
+    "/balance" : {
+      "get" : {
+        "summary" : "get account balance",
+        "operationId" : "getBalance",
+        "description" : "Get the account balance\n",
+        "tags" : [ "Balances" ],
+        "responses" : {
+          "200" : {
+            "description" : "Get the account balance",
+            "schema" : {
+              "$ref" : "#/definitions/GetBalanceResponse"
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/campaign" : {
+      "post" : {
+        "summary" : "create an sms campaign",
+        "operationId" : "createCampaign",
+        "description" : "Create an sms campaign",
+        "parameters" : [ {
+          "name" : "campaign",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/SendSmsCampaignRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "$ref" : "#/responses/SendSmsCampaignSuccessResponse"
+          },
+          "400" : {
+            "$ref" : "#/responses/Standard400ValidationErrorResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "SuccessResponse" : {
+      "type" : "object",
+      "required" : [ "status", "data" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "default" : "success",
+          "example" : "success"
+        },
+        "data" : {
+          "type" : "object"
+        }
+      }
+    },
+    "ValidationError" : {
+      "type" : "object",
+      "required" : [ "status", "code", "data" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "default" : "fail"
+        },
+        "code" : {
+          "type" : "number"
+        },
+        "data" : {
+          "type" : "object"
+        }
+      }
+    },
+    "Error" : {
+      "type" : "object",
+      "required" : [ "status", "message" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "default" : "error"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "number"
+        },
+        "data" : {
+          "type" : "object"
+        }
+      }
+    },
+    "GetBalanceResponse" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/SuccessResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/definitions/BalanceItem"
+          }
+        }
+      } ]
+    },
+    "BalanceItem" : {
+      "type" : "object",
+      "required" : [ "remaining" ],
+      "properties" : {
+        "remaining" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 20.5
+        }
+      }
+    },
+    "Contact" : {
+      "type" : "object",
+      "required" : [ "phone" ],
+      "properties" : {
+        "firstName" : {
+          "type" : "string",
+          "example" : "François"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Mitterrand"
+        },
+        "phone" : {
+          "type" : "string",
+          "example" : "+33601020304"
+        },
+        "field1" : {
+          "type" : "string",
+          "example" : "12/03/1985"
+        },
+        "field2" : {
+          "type" : "string",
+          "example" : "Mr."
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "contact@shortlink.ma"
+        }
+      }
+    },
+    "CampaignOptions" : {
+      "type" : "object",
+      "properties" : {
+        "pendingTimeout" : {
+          "type" : "number",
+          "description" : "The message validity period in minutes. When the period expires, it will not be allowed for the message to be sent\nValidity period longer than 48h is not supported (in this case, it will be automatically set to 48h).\n"
+        }
+      }
+    },
+    "SendListItem" : {
+      "type" : "object",
+      "properties" : {
+        "listIds" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "contacts" : {
+          "type" : "array",
+          "minItems" : 1,
+          "items" : {
+            "$ref" : "#/definitions/Contact"
+          }
+        }
+      }
+    },
+    "SendSmsCampaignRequest" : {
+      "type" : "object",
+      "required" : [ "name", "message", "sendList" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "The campaign name",
+          "example" : "Welcome Campaign"
+        },
+        "message" : {
+          "type" : "string",
+          "example" : "hi Mr {firstName}, welcome to shortlink universe"
+        },
+        "date" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Program a camapaign to be executed at a specific date, the date should be greater than today.\nwhen no date is specified, the campaign is executed immediately\n",
+          "default" : null
+        },
+        "sendList" : {
+          "$ref" : "#/definitions/SendListItem"
+        },
+        "options" : {
+          "$ref" : "#/definitions/CampaignOptions"
+        }
+      }
+    },
+    "SendSmsCampaignSuccess" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/SuccessResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "description" : "the id of the generated campaign",
+                "example" : "MzFtJWDGn8vb9Wmtc"
+              }
+            }
+          }
+        }
+      } ]
+    }
+  },
+  "responses" : {
+    "Standard500ErrorResponse" : {
+      "description" : "Unable to process request due to an error",
+      "schema" : {
+        "$ref" : "#/definitions/Error"
+      }
+    },
+    "Standard400ValidationErrorResponse" : {
+      "description" : "One or more of the query parameters failed validation or was not provided. The request should not be attempted until the parameters are changed. The fields that failed validation will be detailed where possible.",
+      "schema" : {
+        "$ref" : "#/definitions/ValidationError"
+      }
+    },
+    "SendSmsCampaignSuccessResponse" : {
+      "description" : "Unable to process request due to an error",
+      "schema" : {
+        "$ref" : "#/definitions/SendSmsCampaignSuccess"
+      }
+    }
+  }
 }
