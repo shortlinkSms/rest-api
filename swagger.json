@@ -35,10 +35,7 @@
           "200" : {
             "description" : "Get the account balance",
             "schema" : {
-              "type" : "object",
-              "items" : {
-                "$ref" : "#/definitions/GetBalanceResponse"
-              }
+              "$ref" : "#/definitions/GetBalanceResponse"
             }
           },
           "400" : {
@@ -60,10 +57,7 @@
           "in" : "body",
           "required" : true,
           "schema" : {
-            "type" : "object",
-            "items" : {
-              "$ref" : "#/definitions/SendSmsCampaignRequest"
-            }
+            "$ref" : "#/definitions/SendSmsCampaignRequest"
           }
         } ],
         "responses" : {
@@ -101,10 +95,7 @@
         "type" : "object",
         "properties" : {
           "data" : {
-            "type" : "object",
-            "items" : {
-              "$ref" : "#/definitions/BalanceItem"
-            }
+            "$ref" : "#/definitions/BalanceItem"
           }
         }
       } ]
@@ -137,7 +128,16 @@
           "example" : "+33601020304"
         },
         "field1" : {
-          "type" : "string"
+          "type" : "string",
+          "example" : "12/03/1985"
+        },
+        "field2" : {
+          "type" : "string",
+          "example" : "Mr."
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "contact@shortlink.ma"
         }
       }
     },
@@ -171,10 +171,7 @@
           }
         },
         "executionPolicy" : {
-          "type" : "object",
-          "items" : {
-            "$ref" : "#/definitions/ExecutionPolicy"
-          }
+          "$ref" : "#/definitions/ExecutionPolicy"
         }
       }
     }
