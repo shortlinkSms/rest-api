@@ -86,6 +86,9 @@
         "message" : {
           "type" : "string"
         },
+        "data" : {
+          "type" : "object"
+        },
         "code" : {
           "type" : "number"
         }
