@@ -24,6 +24,22 @@
   "schemes" : [ "https" ],
   "produces" : [ "application/json" ],
   "consumes" : [ "application/json" ],
+  "securityDefinitions" : {
+    "shortlink-api-key" : {
+      "type" : "apiKey",
+      "name" : "x-shortlink-apikey",
+      "in" : "header"
+    },
+    "shortlink-api-secret" : {
+      "type" : "apiKey",
+      "name" : "x-shortlink-apisecret",
+      "in" : "header"
+    }
+  },
+  "security" : [ {
+    "shortlink-api-key" : [ ],
+    "shortlink-api-secret" : [ ]
+  } ],
   "paths" : {
     "/balance" : {
       "get" : {
@@ -40,9 +56,6 @@
           },
           "400" : {
             "description" : "bad input parameter"
-          },
-          "401" : {
-            "description" : "Not Authorized"
           }
         }
       }
@@ -69,9 +82,6 @@
           },
           "400" : {
             "description" : "bad input parameter"
-          },
-          "401" : {
-            "description" : "Not Authorized"
           }
         }
       }
