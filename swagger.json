@@ -190,9 +190,15 @@
     "CampaignOptions" : {
       "type" : "object",
       "properties" : {
-        "pendingTimeout" : {
+        "validityPeriod" : {
           "type" : "number",
           "description" : "The message validity period in minutes. When the period expires, it will not be allowed for the message to be sent\nValidity period longer than 48h is not supported (in this case, it will be automatically set to 48h).\n"
+        },
+        "sendAt" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Program a camapaign to be executed at a specific date, the date should be greater than today.\nwhen no date is specified, the campaign is executed immediately\n",
+          "default" : null
         }
       }
     },
@@ -226,12 +232,6 @@
         "message" : {
           "type" : "string",
           "example" : "hi Mr {firstName}, welcome to shortlink universe"
-        },
-        "date" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Program a camapaign to be executed at a specific date, the date should be greater than today.\nwhen no date is specified, the campaign is executed immediately\n",
-          "default" : null
         },
         "sendList" : {
           "$ref" : "#/definitions/SendListItem"
