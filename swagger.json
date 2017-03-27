@@ -37,7 +37,7 @@
             "schema" : {
               "type" : "object",
               "items" : {
-                "$ref" : "#/definitions/BalanceItem"
+                "$ref" : "#/definitions/GetBalanceResponse"
               }
             }
           },
@@ -82,8 +82,32 @@
         "status" : {
           "type" : "string",
           "enum" : [ "success", "fail", "error" ]
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "object"
+        },
+        "code" : {
+          "type" : "number"
         }
       }
+    },
+    "GetBalanceResponse" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/Response"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "items" : {
+              "$ref" : "#/definitions/BalanceItem"
+            }
+          }
+        }
+      } ]
     },
     "BalanceItem" : {
       "type" : "object",
