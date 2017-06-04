@@ -43,7 +43,7 @@
     "shortlinkApiSecret" : [ ]
   } ],
   "paths" : {
-    "/balance" : {
+    "/balances" : {
       "get" : {
         "summary" : "get account balance",
         "operationId" : "getBalance",
@@ -51,28 +51,34 @@
         "tags" : [ "Balances" ],
         "responses" : {
           "200" : {
-            "$ref" : "#/responses/GetBalanceSuccessResponses"
+            "$ref" : "#/responses/GetBalanceSuccessResponse"
+          },
+          "400" : {
+            "$ref" : "#/responses/Standard400ValidationErrorResponse"
+          },
+          "500" : {
+            "$ref" : "#/responses/Standard500ErrorResponse"
           }
         }
       }
     },
-    "/campaign" : {
+    "/sms/send/" : {
       "post" : {
-        "summary" : "create an sms campaign",
-        "operationId" : "createCampaign",
-        "description" : "Create an sms campaign",
-        "tags" : [ "Campaigns" ],
+        "summary" : "Send sms",
+        "operationId" : "SendSms",
+        "description" : "Send one or many sms",
+        "tags" : [ "SendSms" ],
         "parameters" : [ {
-          "name" : "campaign",
+          "name" : "options",
           "in" : "body",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/SendSmsCampaignRequest"
+            "$ref" : "#/definitions/SendSmsRequest"
           }
         } ],
         "responses" : {
           "200" : {
-            "$ref" : "#/responses/SendSmsCampaignSuccessResponse"
+            "$ref" : "#/responses/SendSmsSuccessResponse"
           },
           "400" : {
             "$ref" : "#/responses/Standard400ValidationErrorResponse"
@@ -100,9 +106,9 @@
     "BalanceItem" : {
       "type" : "object",
       "description" : "The entity that represent the account balance",
-      "required" : [ "remaining" ],
+      "required" : [ "remainingUnits" ],
       "properties" : {
-        "remaining" : {
+        "remainingUnits" : {
           "type" : "number",
           "description" : "Account remaining units",
           "format" : "double",
@@ -110,18 +116,24 @@
         }
       }
     },
-    "SendSmsCampaignRequest" : {
+    "SendSmsRequest" : {
       "type" : "object",
-      "required" : [ "name", "message", "sendList" ],
+      "required" : [ "messages" ],
       "properties" : {
-        "name" : {
+        "bulkId" : {
           "type" : "string",
-          "description" : "The campaign name",
-          "example" : "Welcome Campaign"
+          "description" : "The ID wich uniquely identifies the request",
+          "example" : "3501b52b-09d4-4e86-995b-c345dc7b86d1"
         },
-        "message" : {
+        "defaultRegionCode" : {
           "type" : "string",
-          "example" : "hi Mr {firstName}, welcome to shortlink universe"
+          "description" : "the default ISO_3166-1_alpha-2 country code that will be applied if no coutry code is defined in the phone number\n",
+          "externalDocs" : {
+            "description" : "ISO_3166-1_alpha-2 country codes",
+            "url" : "https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2"
+          },
+          "default" : "the api default region code",
+          "example" : "FR"
         },
         "sendList" : {
           "$ref" : "#/definitions/SendListItem"
@@ -200,7 +212,7 @@
         }
       }
     },
-    "SendSmsCampaignSuccess" : {
+    "SendSmsSuccess" : {
       "allOf" : [ {
         "$ref" : "#/definitions/SuccessResponse"
       }, {
@@ -283,13 +295,13 @@
         "$ref" : "#/definitions/ValidationError"
       }
     },
-    "SendSmsCampaignSuccessResponse" : {
+    "SendSmsSuccessResponse" : {
       "description" : "Campaign created successfully",
       "schema" : {
-        "$ref" : "#/definitions/SendSmsCampaignSuccess"
+        "$ref" : "#/definitions/SendSmsSuccess"
       }
     },
-    "GetBalanceSuccessResponses" : {
+    "GetBalanceSuccessResponse" : {
       "description" : "Balance retrieved successfully",
       "schema" : {
         "$ref" : "#/definitions/GetBalanceSuccess"
