@@ -185,14 +185,14 @@
         "transliterateMessage" : {
           "type" : "boolean",
           "description" : "dfqfsdfsdf\n",
-          "example" : true,
-          "default" : false
+          "example" : false,
+          "default" : null
         },
         "messageEncoding" : {
           "type" : "number",
           "description" : "default message encoding, 0 (GSM 7 bit), 1 (UNICODE)  \n",
-          "default" : 0,
-          "example" : 1,
+          "default" : null,
+          "example" : 0,
           "enum" : [ 0, 1 ]
         },
         "validityPeriod" : {
@@ -200,8 +200,7 @@
           "description" : "The message validity period in minutes. When the period expires, it will not be allowed for the message to be sent\nValidity period longer than 48h is not supported (in this case, it will be automatically set to 48h).\n",
           "minimum" : 60,
           "maximum" : 2880,
-          "default" : 2880,
-          "example" : 120
+          "default" : null
         },
         "sendAt" : {
           "type" : "string",
