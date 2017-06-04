@@ -148,24 +148,26 @@
           "enum" : [ "application/json", "application/xml" ]
         },
         "messages" : {
-          "$ref" : "#/definitions/SendListItem"
-        },
-        "options" : {
-          "$ref" : "#/definitions/CampaignOptions"
+          "allOf" : [ {
+            "$ref" : "#/definitions/SendMessageEntry"
+          }, {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/SendMessageEntry"
+            }
+          } ]
         }
       }
     },
-    "SendListItem" : {
+    "SendMessageEntry" : {
       "type" : "object",
-      "description" : "specify the list of new contacts or add exiting ones from your shortlink lists",
+      "description" : "empty\n",
       "properties" : {
-        "listIds" : {
-          "type" : "array",
-          "description" : "import contacts from the specified list identifiers",
-          "items" : {
-            "type" : "string",
-            "example" : "K7ffn4g3tPX9pSTjK"
-          }
+        "from" : {
+          "type" : "string",
+          "description" : "Represents a sender ID which can be alphanumeric or numeric. Alphanumeric sender ID length should be between 3 and 11 characters.\nNumeric sender ID length should be between 3 and 14 characters.\n",
+          "example" : "SHORTLINK",
+          "default" : "The Default Account SENDER ID"
         },
         "contacts" : {
           "type" : "array",
