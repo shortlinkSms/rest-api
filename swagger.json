@@ -220,7 +220,7 @@
         "phone" : {
           "type" : "string",
           "description" : "Phone number\n",
-          "example" : "+33601020304"
+          "example" : "33601020304"
         },
         "firstName" : {
           "type" : "string",
@@ -274,7 +274,7 @@
                 "minItems" : 1,
                 "items" : {
                   "type" : "object",
-                  "required" : [ "messageId", "to" ],
+                  "required" : [ "messageId", "to", "smsCount", "status" ],
                   "properties" : {
                     "messageId" : {
                       "type" : "string",
@@ -283,8 +283,42 @@
                     },
                     "to" : {
                       "type" : "string",
-                      "description" : "Phone number\n",
-                      "example" : "+33601020304"
+                      "description" : "Phone number in international forma\n",
+                      "example" : "33601020304"
+                    },
+                    "smsCount" : {
+                      "type" : "string",
+                      "description" : "The number of sent message segments\n",
+                      "example" : "2"
+                    },
+                    "status" : {
+                      "type" : "object",
+                      "required" : [ "id", "code", "state", "description" ],
+                      "properties" : {
+                        "state" : {
+                          "type" : "string",
+                          "description" : "sms State\n",
+                          "example" : "pending",
+                          "enum" : [ "pending", "fail" ]
+                        },
+                        "id" : {
+                          "type" : "number",
+                          "description" : "SMS status ID\n",
+                          "example" : 30,
+                          "enum" : [ 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 30 ]
+                        },
+                        "code" : {
+                          "type" : "string",
+                          "description" : "SMS status Code\n",
+                          "example" : "ACCEPTED_MSG_SEND_NEXT_ENTRY",
+                          "enum" : [ "REJECTED_PHONE_NUMBER_EMPTY", "REJECTED_PHONE_NUMBER_INVALID_NUMBER", "REJECTED_PHONE_NUMBER_ALREADY_EXIST", "REJECTED_PHONE_NUMBER_INVALID_COUNTRY_CODE", "REJECTED_PHONE_NUMBER_NOT_A_NUMBER", "REJECTED_PHONE_NUMBER_TOO_SHORT_AFTER_IDD", "REJECTED_PHONE_NUMBER_TOO_SHORT_NSN", "REJECTED_PHONE_NUMBER_TOO_LONG", "REJECTED_PHONE_NUMBER_NOT_A_MOBILE_NUMBER", "REJECTED_EMAIL_INVALID", "REJECTED_CONTACT_INVALID", "REJECTED_DUPLICATE_MESSAGE_ID", "REJECTED_SYSTEM_ERROR", "ACCEPTED_MSG_SEND_NEXT_ENTRY" ]
+                        },
+                        "description" : {
+                          "type" : "string",
+                          "description" : "Description of the message status\n",
+                          "example" : "Message accepted and sent to next entry"
+                        }
+                      }
                     }
                   }
                 }
