@@ -135,6 +135,18 @@
           "default" : "the api default region code",
           "example" : "FR"
         },
+        "notifyUrl" : {
+          "type" : "string",
+          "description" : "The URL on your callback server on which the Delivery report will be sent",
+          "example" : "http://yourSite.com/smsCallback"
+        },
+        "notifyContentType" : {
+          "type" : "string",
+          "description" : "Preferred Delivery report content type",
+          "example" : "application/json",
+          "default" : "application/json",
+          "enum" : [ "application/json", "application/xml" ]
+        },
         "messages" : {
           "$ref" : "#/definitions/SendListItem"
         },
