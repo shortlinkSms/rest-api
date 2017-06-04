@@ -34,7 +34,7 @@
     "shortlinkApiSecret" : {
       "type" : "apiKey",
       "description" : "The secret key, generated from the shortlink plateforme",
-      "name" : "x-shortlink-apisecret",
+      "name" : "x-shortlink-apitoken",
       "in" : "header"
     }
   },
