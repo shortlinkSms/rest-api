@@ -263,10 +263,31 @@
           "data" : {
             "type" : "object",
             "properties" : {
-              "id" : {
+              "bulkId" : {
                 "type" : "string",
-                "description" : "The id of the generated campaign\n",
-                "example" : "MzFtJWDGn8vb9Wmtc"
+                "description" : "The ID wich uniquely identifies the request\n",
+                "example" : "3501b52b-09d4-4e86-995b-c345dc7b86d1"
+              },
+              "messages" : {
+                "type" : "array",
+                "description" : "Recipient informations\n",
+                "minItems" : 1,
+                "items" : {
+                  "type" : "object",
+                  "required" : [ "messageId", "to" ],
+                  "properties" : {
+                    "messageId" : {
+                      "type" : "string",
+                      "description" : "The ID that uniquely identifies the message sent\n",
+                      "example" : "853fb8f5-1d02-4972-8cc0-cf190105e699"
+                    },
+                    "to" : {
+                      "type" : "string",
+                      "description" : "Phone number\n",
+                      "example" : "+33601020304"
+                    }
+                  }
+                }
               }
             }
           }
