@@ -162,6 +162,7 @@
     "SendMessageEntry" : {
       "type" : "object",
       "description" : "# test\n",
+      "required" : [ "to", "content" ],
       "properties" : {
         "from" : {
           "type" : "string",
@@ -211,27 +212,18 @@
         }
       }
     },
-    "CampaignOptions" : {
-      "type" : "object",
-      "properties" : {
-        "validityPeriod" : {
-          "type" : "number",
-          "description" : "The message validity period in minutes. When the period expires, it will not be allowed for the message to be sent\nValidity period longer than 48h is not supported (in this case, it will be automatically set to 48h).\n",
-          "default" : 2880,
-          "example" : 120
-        },
-        "sendAt" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Program a camapaign to be executed at a specific date, the date should be greater than today.\nwhen no date is specified, the campaign is executed immediately\n",
-          "default" : null
-        }
-      }
-    },
     "SendMessageRecipientEntry" : {
       "type" : "object",
       "required" : [ "phone" ],
       "properties" : {
+        "messageId" : {
+          "type" : "string",
+          "example" : "853fb8f5-1d02-4972-8cc0-cf190105e699"
+        },
+        "phone" : {
+          "type" : "string",
+          "example" : "+33601020304"
+        },
         "firstName" : {
           "type" : "string",
           "example" : "François"
@@ -240,9 +232,9 @@
           "type" : "string",
           "example" : "Mitterrand"
         },
-        "phone" : {
+        "email" : {
           "type" : "string",
-          "example" : "+33601020304"
+          "example" : "contact@shortlink.ma"
         },
         "field1" : {
           "type" : "string",
@@ -251,14 +243,6 @@
         "field2" : {
           "type" : "string",
           "example" : "Mr."
-        },
-        "email" : {
-          "type" : "string",
-          "example" : "contact@shortlink.ma"
-        },
-        "messageId" : {
-          "type" : "string",
-          "example" : "853fb8f5-1d02-4972-8cc0-cf190105e699"
         }
       }
     },
