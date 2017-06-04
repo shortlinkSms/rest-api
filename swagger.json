@@ -161,7 +161,7 @@
     },
     "SendMessageEntry" : {
       "type" : "object",
-      "description" : "# test\n",
+      "description" : "Message Send Options\n",
       "required" : [ "to", "content" ],
       "properties" : {
         "from" : {
@@ -172,7 +172,7 @@
         },
         "to" : {
           "type" : "array",
-          "description" : "add new contacts to the campaign",
+          "description" : "Recipient informations",
           "minItems" : 1,
           "items" : {
             "$ref" : "#/definitions/SendMessageRecipientEntry"
@@ -180,12 +180,12 @@
         },
         "content" : {
           "type" : "string",
-          "description" : "Represents a sender ID which can be alphanumeric or numeric. Alphanumeric sender ID length should be between 3 and 11 characters.\nNumeric sender ID length should be between 3 and 14 characters.\n",
-          "example" : "My sms Content"
+          "description" : "Text of the message that will be sent, you can inject all recipient data by adding {{porperty}}.\nPossible values are {{firstName}},{{lastName}},{{phone}},{{customerName}},{{email}},{{field1}},{{field2}} \n",
+          "example" : "Bonjour {{firstName}} {{LastName}}, le montant de votre commande {{field1}} est de {{fields2}}, SHORTLINK"
         },
         "transliterateMessage" : {
           "type" : "boolean",
-          "description" : "dfqfsdfsdf\n",
+          "description" : "replace in sms content non GSM 7 bit characters with  GSM 7 bit ones.\n",
           "example" : false,
           "default" : null
         },
@@ -218,31 +218,43 @@
       "properties" : {
         "messageId" : {
           "type" : "string",
+          "description" : "The ID that uniquely identifies the message sent",
           "example" : "853fb8f5-1d02-4972-8cc0-cf190105e699"
         },
         "phone" : {
           "type" : "string",
+          "description" : "Phone number",
           "example" : "+33601020304"
         },
         "firstName" : {
           "type" : "string",
+          "description" : "recipient first name",
           "example" : "François"
         },
         "lastName" : {
           "type" : "string",
+          "description" : "recipient last name",
           "example" : "Mitterrand"
+        },
+        "customerName" : {
+          "type" : "string",
+          "description" : "recipient companyName",
+          "example" : "SHORTLINK"
         },
         "email" : {
           "type" : "string",
+          "description" : "recipient email address",
           "example" : "contact@shortlink.ma"
         },
         "field1" : {
           "type" : "string",
+          "description" : "field used for adding custom data",
           "example" : "12/03/1985"
         },
         "field2" : {
           "type" : "string",
-          "example" : "Mr."
+          "description" : "field used for adding custom data",
+          "example" : "123,99 EUR"
         }
       }
     },
