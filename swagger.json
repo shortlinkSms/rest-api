@@ -147,16 +147,12 @@
           "default" : "application/json",
           "enum" : [ "application/json", "application/xml" ]
         },
-        "messages" : {
-          "allOf" : [ {
+        "messages" : [ {
+          "type" : "array",
+          "items" : {
             "$ref" : "#/definitions/SendMessageEntry"
-          }, {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/definitions/SendMessageEntry"
-            }
-          } ]
-        }
+          }
+        } ]
       }
     },
     "SendMessageEntry" : {
