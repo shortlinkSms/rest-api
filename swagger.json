@@ -135,7 +135,7 @@
           "default" : "the api default region code",
           "example" : "FR"
         },
-        "sendList" : {
+        "messages" : {
           "$ref" : "#/definitions/SendListItem"
         },
         "options" : {
