@@ -5,14 +5,14 @@
     "description" : "contact shortlink simply",
     "version" : "1.0.0",
     "contact" : {
-      "email" : "support@shortlink.pro"
+      "email" : "support@shortlink.ma"
     },
     "license" : {
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host" : "app.shortlink.ma",
+  "host" : "app.shortlink.pro",
   "basePath" : "/api/v1",
   "tags" : [ {
     "name" : "admins",
